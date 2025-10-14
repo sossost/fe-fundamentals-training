@@ -89,12 +89,14 @@ function LoadingSpinner(): JSX.Element {
 // ============================================================================
 
 /**
- * QueryBoundary - React Query/SWR 등과 함께 사용하기 좋은 바운더리
+ * QueryBoundary - React Query v5/SWR 등과 함께 사용하기 좋은 바운더리
  *
  * @example
  * ```tsx
+ * import { useSuspenseQuery } from '@tanstack/react-query';
+ *
  * <QueryBoundary>
- *   <UserList /> // useQuery 사용하는 컴포넌트
+ *   <UserList /> // useSuspenseQuery 사용하는 컴포넌트
  * </QueryBoundary>
  * ```
  */

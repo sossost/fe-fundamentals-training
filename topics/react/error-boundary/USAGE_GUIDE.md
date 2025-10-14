@@ -188,25 +188,31 @@ function Dashboard() {
 
 ---
 
-### 시나리오 7: React Query와 함께 사용
+### 시나리오 7: React Query v5와 함께 사용
 
 **문제**: React Query 에러를 Error Boundary로 처리
 
-**해결책**: suspense 옵션 + AsyncBoundary
+**해결책**: useSuspenseQuery + AsyncBoundary
 
 ```tsx
-import { AsyncBoundary } from './error-boundary/components/AsyncBoundary';
-import { SmartErrorFallback } from './error-boundary/components/ErrorFallback';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { AsyncBoundary } from "./error-boundary/components/AsyncBoundary";
+import { SmartErrorFallback } from "./error-boundary/components/ErrorFallback";
 
 function UserList() {
-  // suspense: true로 설정
-  const { data } = useQuery({
-    queryKey: ['users'],
+  // v5부터는 useSuspenseQuery 사용
+  const { data } = useSuspenseQuery({
+    queryKey: ["users"],
     queryFn: fetchUsers,
-    suspense: true,
   });
 
-  return <div>{data.map(user => ...)}</div>;
+  return (
+    <div>
+      {data.map((user) => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
 }
 
 // 사용
@@ -215,7 +221,17 @@ function UserList() {
   suspenseFallback={<div>로딩 중...</div>}
 >
   <UserList />
-</AsyncBoundary>
+</AsyncBoundary>;
+```
+
+**v4에서 마이그레이션:**
+
+```tsx
+// ❌ v4 (deprecated)
+useQuery({ queryKey: ["users"], queryFn: fetchUsers, suspense: true });
+
+// ✅ v5
+useSuspenseQuery({ queryKey: ["users"], queryFn: fetchUsers });
 ```
 
 ---

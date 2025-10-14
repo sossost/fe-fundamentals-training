@@ -29,7 +29,8 @@ error-boundary/
 │     ├─ BasicExample.tsx           # 기본 사용 예시
 │     ├─ NestedBoundaries.tsx       # 중첩 바운더리 예시
 │     ├─ ApiErrorExample.tsx        # API 에러 처리 예시
-│     └─ EventHandlerErrorExample.tsx # 이벤트/비동기 에러 예시
+│     ├─ EventHandlerErrorExample.tsx # 이벤트/비동기 에러 예시
+│     └─ ReactQueryExample.tsx      # React Query v5 통합 예시
 └─ README.md
 ```
 
@@ -161,15 +162,12 @@ export default function Error({
 
 ```tsx
 <ErrorBoundary fallback={<GlobalErrorFallback />}>
-  {" "}
   {/* 전역 */}
   <App>
     <ErrorBoundary fallback={<PageErrorFallback />}>
-      {" "}
       {/* 페이지 */}
       <Page>
         <ErrorBoundary fallback={<WidgetErrorFallback />}>
-          {" "}
           {/* 위젯 */}
           <CriticalWidget />
         </ErrorBoundary>
@@ -261,6 +259,98 @@ function ErrorUI({ resetError }: FallbackProps) {
   );
 }
 ```
+
+---
+
+## 🔄 React Query v5 통합
+
+### 1. useSuspenseQuery로 자동 통합
+
+React Query v5부터는 `useSuspenseQuery`를 사용하여 Suspense와 Error Boundary를 자동으로 통합합니다.
+
+```tsx
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { AsyncBoundary } from "./components/AsyncBoundary";
+
+function UserList() {
+  // v5: useSuspenseQuery 사용
+  const { data } = useSuspenseQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+  });
+
+  return (
+    <div>
+      {data.map((user) => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
+}
+
+// AsyncBoundary로 감싸기
+<AsyncBoundary
+  suspenseFallback={<LoadingSpinner />}
+  errorFallback={<SmartErrorFallback />}
+>
+  <UserList />
+</AsyncBoundary>;
+```
+
+### 2. useQuery + throwOnError 옵션
+
+기존 `useQuery`를 사용하면서 에러만 Error Boundary로 전달하려면:
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+
+function UserList() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    throwOnError: true, // 에러 발생 시 Error Boundary로 throw
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+
+  return <div>{/* ... */}</div>;
+}
+```
+
+### 3. v4에서 v5로 마이그레이션
+
+```tsx
+// ❌ v4 (deprecated)
+import { useQuery } from "react-query";
+
+useQuery({
+  queryKey: ["users"],
+  queryFn: fetchUsers,
+  suspense: true, // ← 제거됨
+  cacheTime: 60000, // ← 이름 변경
+});
+
+// ✅ v5
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+useSuspenseQuery({
+  queryKey: ["users"],
+  queryFn: fetchUsers,
+  gcTime: 60000, // cacheTime → gcTime
+});
+```
+
+### 4. QueryBoundary로 간편하게 사용
+
+```tsx
+import { QueryBoundary } from "./components/AsyncBoundary";
+
+<QueryBoundary>
+  <UserList /> {/* useSuspenseQuery 사용 */}
+</QueryBoundary>;
+```
+
+**자세한 예제**: `src/examples/ReactQueryExample.tsx` 참고
 
 ---
 
@@ -369,13 +459,33 @@ function ErrorFallback({ error }: FallbackProps) {
 
 ## 📊 실전 체크리스트
 
+### 기본 설정
+
 - [ ] 도메인별 에러 클래스 계층 정의 (`types/errors.ts`)
 - [ ] Type Guards 및 유틸리티 분리 (`utils/errorTypeGuards.ts`)
 - [ ] 페이지/섹션별 Error Boundary 배치
 - [ ] 에러 타입별 fallback UI 준비 (Tailwind CSS)
+
+### 에러 처리
+
+- [ ] 렌더링 에러: Error Boundary 자동 캐치
 - [ ] 이벤트 핸들러 에러: `useAsyncError` 훅 활용
 - [ ] 비동기 에러: `useAsyncErrorWrapper` 또는 `useSafeAsync` 활용
-- [ ] Next.js `error.tsx`, `global-error.tsx` 구현
+
+### React Query 통합 (v5)
+
+- [ ] `useSuspenseQuery` + `AsyncBoundary` 조합 사용
+- [ ] 또는 `useQuery` + `throwOnError: true` 옵션
+- [ ] `QueryBoundary`로 간편하게 감싸기
+- [ ] 에러 발생 시 `queryClient.invalidateQueries()` 리셋
+
+### Next.js
+
+- [ ] `error.tsx` (라우트별 에러 처리)
+- [ ] `global-error.tsx` (전역 에러 처리)
+
+### 모니터링 & UX
+
 - [ ] 에러 로깅 시스템 연동 (Sentry 등)
 - [ ] 재시도 로직 구현 (`withRetry`)
 - [ ] 사용자 친화적 에러 메시지 작성
@@ -388,6 +498,8 @@ function ErrorFallback({ error }: FallbackProps) {
 - [React Error Boundaries 공식 문서](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
 - [Next.js Error Handling](https://nextjs.org/docs/app/building-your-application/routing/error-handling)
 - [React Error Boundary 라이브러리](https://github.com/bvaughn/react-error-boundary)
+- [TanStack Query v5 문서](https://tanstack.com/query/latest/docs/react/guides/suspense)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ---
 
@@ -399,7 +511,8 @@ function ErrorFallback({ error }: FallbackProps) {
 4. **타입별 분기**: `instanceof`로 에러 타입에 맞는 UI 렌더
 5. **렌더링 에러**: Error Boundary가 자동 캐치
 6. **이벤트/비동기 에러**: `useAsyncError` 훅으로 Error Boundary에 전파
-7. **Next.js**: `error.tsx`로 라우트별 에러 처리
-8. **Tailwind CSS**: 모든 UI 컴포넌트에 Tailwind 적용
-9. **로깅/모니터링**: Sentry 등으로 에러 추적
-10. **사용자 경험**: 명확한 메시지 + 재시도 옵션 제공
+7. **React Query v5**: `useSuspenseQuery` + `AsyncBoundary`로 통합
+8. **Next.js**: `error.tsx`로 라우트별 에러 처리
+9. **Tailwind CSS**: 모든 UI 컴포넌트에 Tailwind 적용
+10. **로깅/모니터링**: Sentry 등으로 에러 추적
+11. **사용자 경험**: 명확한 메시지 + 재시도 옵션 제공
