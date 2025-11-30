@@ -87,12 +87,13 @@ Next.js 관련 학습 자료입니다.
 
 | 주제                                                           | 설명                  | 핵심 내용                              |
 | -------------------------------------------------------------- | --------------------- | -------------------------------------- |
-| [시맨틱 HTML](./topics/accessibility/semantic-html.md)         | 의미 있는 HTML 마크업 | 랜드마크, 제목 계층, button vs div     |
-| [ARIA](./topics/accessibility/aria-basics.md)                  | 접근성 향상 속성      | role, aria-label, aria-live, 상태 속성 |
-| [키보드 접근성](./topics/accessibility/keyboard-navigation.md) | 키보드 네비게이션     | tabindex, 포커스 관리, 포커스 트랩     |
-| [폼 접근성](./topics/accessibility/form-accessibility.md)      | 접근성 있는 폼        | label 연결, 에러 처리, autocomplete    |
-| [색상과 대비](./topics/accessibility/color-contrast.md)        | 색상 접근성           | WCAG 대비 기준, 다크모드, 고대비       |
-| [이미지 접근성](./topics/accessibility/image-accessibility.md) | 이미지 대체 텍스트    | alt 작성법, SVG, 아이콘 처리           |
+| [시맨틱 HTML](./topics/accessibility/semantic-html.md)             | 의미 있는 HTML 마크업   | 랜드마크, 제목 계층, button vs div         |
+| [ARIA](./topics/accessibility/aria-basics.md)                      | 접근성 향상 속성        | role, aria-label, aria-live, 상태 속성     |
+| [키보드 접근성](./topics/accessibility/keyboard-navigation.md)     | 키보드 네비게이션       | tabindex, 포커스 관리, 포커스 트랩         |
+| [폼 접근성](./topics/accessibility/form-accessibility.md)          | 접근성 있는 폼          | label 연결, 에러 처리, autocomplete        |
+| [색상과 대비](./topics/accessibility/color-contrast.md)            | 색상 접근성             | WCAG 대비 기준, 다크모드, 고대비           |
+| [이미지 접근성](./topics/accessibility/image-accessibility.md)     | 이미지 대체 텍스트      | alt 작성법, SVG, 아이콘 처리               |
+| [React 컴포넌트 패턴](./topics/accessibility/react-a11y-patterns.md) | 접근성 있는 UI 컴포넌트 | 모달, 드롭다운, 탭, 아코디언, 콤보박스 등 |
 
 ## 📖 참고 자료
 
