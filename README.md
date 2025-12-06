@@ -10,6 +10,7 @@
 - [React](#-react)
 - [Next.js](#-nextjs)
 - [Accessibility](#-accessibility)
+- [Performance](#-performance)
 
 ---
 
@@ -85,15 +86,28 @@ Next.js 관련 학습 자료입니다.
 
 웹 접근성과 웹 표준에 대한 학습 자료입니다.
 
-| 주제                                                           | 설명                  | 핵심 내용                              |
-| -------------------------------------------------------------- | --------------------- | -------------------------------------- |
-| [시맨틱 HTML](./topics/accessibility/semantic-html.md)             | 의미 있는 HTML 마크업   | 랜드마크, 제목 계층, button vs div         |
-| [ARIA](./topics/accessibility/aria-basics.md)                      | 접근성 향상 속성        | role, aria-label, aria-live, 상태 속성     |
-| [키보드 접근성](./topics/accessibility/keyboard-navigation.md)     | 키보드 네비게이션       | tabindex, 포커스 관리, 포커스 트랩         |
-| [폼 접근성](./topics/accessibility/form-accessibility.md)          | 접근성 있는 폼          | label 연결, 에러 처리, autocomplete        |
-| [색상과 대비](./topics/accessibility/color-contrast.md)            | 색상 접근성             | WCAG 대비 기준, 다크모드, 고대비           |
-| [이미지 접근성](./topics/accessibility/image-accessibility.md)     | 이미지 대체 텍스트      | alt 작성법, SVG, 아이콘 처리               |
-| [React 컴포넌트 패턴](./topics/accessibility/react-a11y-patterns.md) | 접근성 있는 UI 컴포넌트 | 모달, 드롭다운, 탭, 아코디언, 콤보박스 등 |
+| 주제                                                                        | 설명                    | 핵심 내용                                    |
+| --------------------------------------------------------------------------- | ----------------------- | -------------------------------------------- |
+| [시맨틱 HTML](./topics/accessibility/semantic-html.md)                      | 의미 있는 HTML 마크업   | 랜드마크, 제목 계층, button vs div           |
+| [ARIA](./topics/accessibility/aria-basics.md)                               | 접근성 향상 속성        | role, aria-label, aria-live, 상태 속성       |
+| [키보드 접근성](./topics/accessibility/keyboard-navigation.md)              | 키보드 네비게이션       | tabindex, 포커스 관리, 포커스 트랩           |
+| [폼 접근성](./topics/accessibility/form-accessibility.md)                   | 접근성 있는 폼          | label 연결, 에러 처리, autocomplete          |
+| [색상과 대비](./topics/accessibility/color-contrast.md)                     | 색상 접근성             | WCAG 대비 기준, 다크모드, 고대비             |
+| [이미지 접근성](./topics/accessibility/image-accessibility.md)              | 이미지 대체 텍스트      | alt 작성법, SVG, 아이콘 처리                 |
+| [React 컴포넌트 패턴](./topics/accessibility/react-a11y-patterns.md)        | 접근성 있는 UI 컴포넌트 | 모달, 드롭다운, 탭, 아코디언, 콤보박스 등    |
+| [스크린 리더 호환성](./topics/accessibility/screen-reader-compatibility.md) | 스크린 리더 사용법      | VoiceOver, NVDA 테스트, 라이브 리전, sr-only |
+
+---
+
+## ⚡ Performance
+
+웹 성능 최적화 기법입니다.
+
+| 주제                                                            | 설명               | 핵심 내용                              |
+| --------------------------------------------------------------- | ------------------ | -------------------------------------- |
+| [번들 크기 최적화](./topics/performance/bundle-optimization.md) | 번들 최적화        | 코드 스플리팅, 트리 쉐이킹, 압축       |
+| [이미지 최적화](./topics/performance/image-optimization.md)     | 이미지 성능 최적화 | WebP/AVIF, lazy loading, 반응형 이미지 |
+| [Core Web Vitals](./topics/performance/core-web-vitals.md)      | 핵심 웹 지표       | LCP, INP, CLS 최적화                   |
 
 ## 📖 참고 자료
 
