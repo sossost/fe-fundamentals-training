@@ -286,3 +286,5 @@ const changePasswordMutation = useMutation({
 - [MDN - SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
 - [Next.js - CSRF Protection](https://nextjs.org/docs/api-routes/introduction)
 
+
+
